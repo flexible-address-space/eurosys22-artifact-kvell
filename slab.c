@@ -218,7 +218,7 @@ void update_item_async_cb1(struct slab_callback *callback) {
    void *item = callback->item;
    struct item_metadata *meta = item;
    off_t offset_in_page = item_in_page_offset(s, idx);
-   struct item_metadata *old_meta = (void*)(&disk_page[offset_in_page]);
+   // struct item_metadata *old_meta = (void*)(&disk_page[offset_in_page]);
 
    // if(callback->action == UPDATE) {
    //    size_t new_key_size = meta->key_size;
