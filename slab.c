@@ -220,18 +220,18 @@ void update_item_async_cb1(struct slab_callback *callback) {
    off_t offset_in_page = item_in_page_offset(s, idx);
    struct item_metadata *old_meta = (void*)(&disk_page[offset_in_page]);
 
-   if(callback->action == UPDATE) {
-      size_t new_key_size = meta->key_size;
-      size_t old_key_size = old_meta->key_size;
-      if(new_key_size != old_key_size) {
-         die("Updating an item, but key size changed! Likely this is because 2 keys have the same prefix in the index and we got confused because they have the same prefix. TODO: make the index more robust by detecting that 2 keys have the same prefix and transforming the prefix -> slab_idx to prefix -> [ { full key 1, slab_idx1 }, { full key 2, slab_idx2 } ]\n");
-      }
+   // if(callback->action == UPDATE) {
+   //    size_t new_key_size = meta->key_size;
+   //    size_t old_key_size = old_meta->key_size;
+   //    if(new_key_size != old_key_size) {
+   //       die("Updating an item, but key size changed! Likely this is because 2 keys have the same prefix in the index and we got confused because they have the same prefix. TODO: make the index more robust by detecting that 2 keys have the same prefix and transforming the prefix -> slab_idx to prefix -> [ { full key 1, slab_idx1 }, { full key 2, slab_idx2 } ]\n");
+   //    }
 
-      char *new_key = &disk_page[offset_in_page + sizeof(*meta)];
-      char *old_key = &(((char*)old_meta)[sizeof(*meta)]);
-      if(memcmp(new_key, old_key, new_key_size))
-         die("Updating an item, but key mismatch! Likely this is because 2 keys have the same prefix in the index. TODO: make the index more robust by detecting that 2 keys have the same prefix and transforming the prefix -> slab_idx to prefix -> [ { full key 1, slab_idx1 }, { full key 2, slab_idx2 } ]\n");
-   }
+   //    char *new_key = &disk_page[offset_in_page + sizeof(*meta)];
+   //    char *old_key = &(((char*)old_meta)[sizeof(*meta)]);
+   //    if(memcmp(new_key, old_key, new_key_size))
+   //       die("Updating an item, but key mismatch! Likely this is because 2 keys have the same prefix in the index. TODO: make the index more robust by detecting that 2 keys have the same prefix and transforming the prefix -> slab_idx to prefix -> [ { full key 1, slab_idx1 }, { full key 2, slab_idx2 } ]\n");
+   // }
 
    meta->rdt = get_rdt(s->ctx);
    if(meta->key_size == -1)
